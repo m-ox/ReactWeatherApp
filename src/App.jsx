@@ -5,6 +5,7 @@ import './App.css'
 function App() {
   const [data, setData] = useState([])
   const [descr, setDescr] = useState('Unknown weather')
+  const [temp, setTemp] = useState('')
   const [icon, setIcon] = useState('')
 
   const [zip, setZip] = useState('')
@@ -25,6 +26,7 @@ function App() {
                   console.log(res)
                   setData(res.data)
                   setDescr(res.data.weather[0].description)
+                  setTemp(Math.floor(9/5 * (res.data.main.temp - 273) + 32))
                   setIcon(`http://openweathermap.org/img/wn/${res.data.weather[0].icon}@2x.png`)
                 })
         
@@ -97,7 +99,7 @@ function App() {
           Current weather for the {data.name} area
         </p>
         <p style={{textTransform:'capitalize'}}>
-          {descr}
+          {temp} &deg; {descr}
         </p>
 
         <img src={icon} alt={descr} />
