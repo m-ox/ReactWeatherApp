@@ -5,31 +5,55 @@ import './App.css'
 function App() {
   const [data, setData] = useState([])
   const [descr, setDescr] = useState('Unknown weather')
+  const [icon, setIcon] = useState('')
 
   const [zip, setZip] = useState('')
   const [long, setLong] = useState('')
   const [lat, setLat] = useState('')
 
-  async function getData() {
+  useEffect(() => {
+    if (!navigator.geolocation) {
+      setDescr('Geolocation is not supported by your browser');
+    } else {
+      setDescr('Locating...');
+      navigator.geolocation.getCurrentPosition((position) => {
+        setLat(position.coords.latitude);
+        setLong(position.coords.longitude);
 
-    await axios.get(`http://api.openweathermap.org/geo/1.0/zip?zip=${zip},US&appid=f195469201dedc86117028f76d94996d`)
-         .then((res) => {
-           setLong(res.data.lon)
-           setLat(res.data.lat)
-         })
-  }
+        axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=f195469201dedc86117028f76d94996d`)
+                .then((res) => {
+                  console.log(res)
+                  setData(res.data)
+                  setDescr(res.data.weather[0].description)
+                  setIcon(`http://openweathermap.org/img/wn/${res.data.weather[0].icon}@2x.png`)
+                })
+        
+      }, () => {
+        setDescr('Unable to retrieve your location');
+      });
+    }
+  }, [])
 
-  function handleLong(event) {
-    setLong(event.target.value)
-  }
+  // async function getData() {
 
-  function handleLat(event) {
-    setLat(event.target.value)
-  }
+  //   await axios.get(`http://api.openweathermap.org/geo/1.0/zip?zip=${zip},US&appid=f195469201dedc86117028f76d94996d`)
+  //        .then((res) => {
+  //          setLong(res.data.lon)
+  //          setLat(res.data.lat)
+  //        })
+  // }
 
-  function handleZip(event) {
-    setZip(event.target.value)
-  }
+  // function handleLong(event) {
+  //   setLong(event.target.value)
+  // }
+
+  // function handleLat(event) {
+  //   setLat(event.target.value)
+  // }
+
+  // function handleZip(event) {
+  //   setZip(event.target.value)
+  // }
 
   function updateWeather() {
      axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=f195469201dedc86117028f76d94996d`)
@@ -46,7 +70,8 @@ function App() {
         <p style={{fontWeight:'900', fontSize:'3em', border:'solid white 15px', borderRadius:'10px', padding:'20px 40px'}}>
           Weather API
         </p>
-        <p>
+
+        {/* <p>
           Zipcode
           <textarea value={zip} onChange={() => handleZip(event)} /> <br/>
 
@@ -58,13 +83,15 @@ function App() {
           Latitude
           <textarea value={lat} onChange={() => handleLat(event)}/> <br/>
 
-        </p>
+        </p> */}
+
+        {/* <button onClick={() => getLocation()}> Get Location </button>
 
         <br/>
 
         <button onClick={() => {updateWeather()}}>What's the weather?</button>
 
-        <br/>
+        <br/> */}
 
         <p style={{fontWeight:'900'}}>
           Current weather for the {data.name} area
@@ -72,6 +99,8 @@ function App() {
         <p style={{textTransform:'capitalize'}}>
           {descr}
         </p>
+
+        <img src={icon} alt={descr} />
         
       </header>
     </div>
