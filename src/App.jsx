@@ -13,12 +13,12 @@ function App() {
   const key = import.meta.env.VITE_WEATHER_API_KEY
 
   const weather = {
-    thunderstorm: 'https://wallpapers.com/wallpapers/iphone-4k-thunderstorm-5ieattwkqqoynfoe.html?embed=true',
-    drizzle: 'https://wallpapers.com/wallpapers/rain-heavy-rain-flowers-street-balcony-height-wet-1lo5o3cswuz897y9.html?embed=true',
-    rain: 'https://wallpapers.com/wallpapers/rain-in-city-hd-wallpaper-i-hd-image-83ztyvqabpqleouo.html?embed=true',
-    snow: 'https://wallpapers.com/wallpapers/a-white-dragon-peanut-on-the-table-gouache-ideas-0cxm1xy026zidi2w.html?embed=true',
-    clear: 'https://wallpapers.com/wallpapers/sunny-day-in-boston-9ixaih3jaxa04qei.html?embed=true',
-    clouds: 'https://wallpapers.com/wallpapers/dark-cloudy-sunset-ulpd38espbo8ltj6.html?embed=true'
+    thunderstorm: 'https://wallpapers.com/images/high/iphone-4k-thunderstorm-5ieattwkqqoynfoe.jpg',
+    drizzle: 'https://wallpapers.com/images/high/rain-heavy-rain-flowers-street-balcony-height-wet-1lo5o3cswuz897y9.jpg',
+    rain: 'https://wallpapers.com/images/high/rain-in-city-hd-wallpaper-i-hd-image-83ztyvqabpqleouo.jpg',
+    snow: 'https://wallpapers.com/images/high/a-white-dragon-peanut-on-the-table-gouache-ideas-0cxm1xy026zidi2w.jpg',
+    clear: 'https://wallpapers.com/images/high/sunny-day-in-boston-9ixaih3jaxa04qei.jpg',
+    clouds: 'https://wallpapers.com/images/high/dark-cloudy-sunset-ulpd38espbo8ltj6.jpg'
   }
 
   useEffect(() => {
@@ -40,12 +40,7 @@ function App() {
 
                   const main_weather = res.data.weather[0].main.toLowerCase()
 
-                  console.log('main weather:', main_weather)
-
                   setMain(weather[main_weather])
-
-                  
-                  console.log(main)
                 })
         
       }, () => {
@@ -65,19 +60,18 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header" style={{backgroundImage: `url(${main})`}}>
-        <p style={{fontWeight:'900', fontSize:'3em', border:'solid white 15px', borderRadius:'10px', padding:'20px 40px'}}>
-          Weather API
-        </p>
+      <header className="App-header" style={{backgroundImage: `url(${main})`, backgroundSize: 'cover', height: '100vh'}}>
 
-        <p style={{fontWeight:'900'}}>
-          Current weather for the {data.name} area
-        </p>
-        <p style={{textTransform:'capitalize'}}>
-          {temp} &deg; {descr}
-        </p>
+        <div style={{color:'black', height:'300px', backgroundColor:'#97979785', borderRadius:'50px', padding:'20px 40px'}}>
+          <p style={{fontWeight:'900'}}>
+            Current weather for the {data.name} area
+          </p>
+          <p style={{textTransform:'capitalize'}}>
+            {temp} &deg; {descr}
+          </p>
 
-        <img src={icon} alt={descr} />
+          <img src={icon} alt={descr} />
+        </div>
         
       </header>
     </div>
