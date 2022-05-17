@@ -12,6 +12,7 @@ function App() {
   const [lat, setLat] = useState('')
   const key = import.meta.env.VITE_WEATHER_API_KEY
 
+  // I'm stealing wallpapers for the aesthetic uwu
   const weather = {
     thunderstorm: 'https://wallpapers.com/images/high/iphone-4k-thunderstorm-5ieattwkqqoynfoe.jpg',
     drizzle: 'https://wallpapers.com/images/high/rain-heavy-rain-flowers-street-balcony-height-wet-1lo5o3cswuz897y9.jpg',
@@ -32,15 +33,11 @@ function App() {
 
         axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=${key}`)
                 .then((res) => {
-                  console.log(res)
                   setData(res.data)
                   setDescr(res.data.weather[0].description)
                   setTemp(Math.floor(9/5 * (res.data.main.temp - 273) + 32) +  "° F")
                   setIcon(`http://openweathermap.org/img/wn/${res.data.weather[0].icon}@2x.png`)
-
-                  const main_weather = res.data.weather[0].main.toLowerCase()
-
-                  setMain(weather[main_weather])
+                  setMain(weather[res.data.weather[0].main.toLowerCase()])
                 })
         
       }, () => {
@@ -49,6 +46,7 @@ function App() {
     }
   }, [])
 
+  // keeping for posterity, it was handy having a button sometimes
   function updateWeather() {
      axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${key}`)
                 .then((res) => {
