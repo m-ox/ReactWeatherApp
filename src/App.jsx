@@ -35,7 +35,7 @@ function App() {
                   console.log(res)
                   setData(res.data)
                   setDescr(res.data.weather[0].description)
-                  setTemp(Math.floor(9/5 * (res.data.main.temp - 273) + 32))
+                  setTemp(Math.floor(9/5 * (res.data.main.temp - 273) + 32) +  "° F")
                   setIcon(`http://openweathermap.org/img/wn/${res.data.weather[0].icon}@2x.png`)
 
                   const main_weather = res.data.weather[0].main.toLowerCase()
@@ -62,15 +62,20 @@ function App() {
     <div className="App">
       <header className="App-header" style={{backgroundImage: `url(${main})`, backgroundSize: 'cover', height: '100vh'}}>
 
-        <div style={{color:'black', height:'300px', backgroundColor:'#97979785', borderRadius:'50px', padding:'20px 40px'}}>
+        <div style={{color:'black', fontFamily:'monospace', fontSize:'1.5em', height:'250px', backgroundColor:'#97979785', borderRadius:'50px', padding:'20px 40px'}}>
           <p style={{fontWeight:'900'}}>
             Current weather for the {data.name} area
           </p>
-          <p style={{textTransform:'capitalize'}}>
-            {temp} &deg; {descr}
+          <p style={{
+                      textTransform:'capitalize',
+                      display:'flex',
+                      alignItems:'center',
+                      justifyContent:'center',
+                      fontSize:'1em'
+                      }}>
+            {temp} <img src={icon} alt={descr} /> {descr}
           </p>
 
-          <img src={icon} alt={descr} />
         </div>
         
       </header>
