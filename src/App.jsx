@@ -56,9 +56,12 @@ function App() {
                 })
   }
 
+  // TODO refactor styles if I want to use this as a component in a dashboard
+
   return (
     <div className="App">
-      <header className="App-header" style={{backgroundImage: `url(${main})`, backgroundSize: 'cover', height: '100vh'}}>
+      <div className="test">
+        <header className="App-header" style={{backgroundImage: `url(${main})`, backgroundSize: 'cover', height: '100vh'}}>
 
         <div style={{color:'black', fontFamily:'monospace', fontSize:'1.5em', height:'250px', backgroundColor:'#97979785', borderRadius:'50px', padding:'20px 40px'}}>
           <p style={{fontWeight:'900'}}>
@@ -75,8 +78,9 @@ function App() {
           </p>
 
         </div>
-        
-      </header>
+
+        </header>
+      </div>
     </div>
   )
 }
